@@ -2,10 +2,11 @@ import random
 
 
 def game():
-    game_over_flag = False
-    while not game_over_flag:
-        print('!')
+    a = 1
+    print(a, '!')
 
 
-if input('Начать игру? (да/нет):').lower == 'да':
+if input('Начать игру? (да/нет): ').lower() == 'да':
     game()
+else:
+    print('Bruh')
