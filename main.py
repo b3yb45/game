@@ -9,4 +9,4 @@ def game():
 if input('Начать игру? (да/нет): ').lower() == 'да':
     game()
 else:
-    print('Bruh')
+    print('oi bruv')
