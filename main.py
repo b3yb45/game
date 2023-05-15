@@ -2,44 +2,44 @@ import Ru_Venera as Ru_V
 import random
 
 
-def game():
-    a = 1
-    print(a, '!')
-
-
-if input('Начать игру? (да/нет): ').lower() == 'да':
-    game()
-else:
-    print('oi bruv')
-    
 print(Ru_V.greeting)
+
 humans = 10
 eat = 100
 drink = 100
 research = 1
 sanitary = 100
 day = 0
-a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+venus_events = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 def sobitie(i, humans, eat, drink, research, sanitary):
     if i == 0:
         print(Ru_V.event_0)
+
         return humans, eat, drink, research, sanitary
-    if i == 1:
+
+    elif i == 1:
         print(Ru_V.event_1)
+
         research += research * 0.05
         eat += eat * 0.03
         drink += drink * 0.03
+
         return humans, eat, drink, research, sanitary
+
     if i == 2:
         print(Ru_V.event_2)
+
         eat -= eat * 0.15
         drink -= drink * 0.20
         research -= research * 0.08
         sanitary -= sanitary * 0.1
+
         return humans, eat, drink, research, sanitary
-    if i == 3:
+
+    elif i == 3:
         m1 = input(Ru_V.event_3).lower()
         if m1 == "да":
             print(Ru_V.event_301)
@@ -104,47 +104,61 @@ while humans != 0:
     day += 1
     print(Ru_V.unit_day, day)
     c = input(Ru_V.daily).lower()
+
     if c == "садоводство":
         eat += eat*0.05
         drink -= drink * 0.001 * humans
         sanitary -= sanitary * 0.005 * humans
         research += research * 0.5 * humans * 0.1
-    if c == "добыча воды":
+
+    elif c == "добыча воды":
         drink += drink * 0.05
         eat -= eat * 0.001 * humans
         sanitary -= sanitary * 0.005 * humans
         research += research * 0.5 * humans * 0.1
-    if c == "уборка":
+
+    elif c == "уборка":
         sanitary += sanitary * 0.5
         eat -= eat * 0.001 * humans
         drink -= drink * 0.001 * humans
         research += research * 0.5 * humans * 0.1
-    if c == "изучение":
+
+    elif c == "изучение":
         research += research * humans * 0.1
         eat -= eat * 0.001 * humans
         drink -= drink * 0.001 * humans
         sanitary -= sanitary * 0.005 * humans
-    s = choice(a)
-    humans, eat, drink, research, sanitary = sobitie(s, humans, eat, drink, research, sanitary)
+
+    event_number = random.choice(venus_events)
+    humans, eat, drink, research, sanitary = sobitie(event_number, humans, eat, drink, research, sanitary)
+
     if humans == 0:
         print(Ru_V.game_over)
         break
+
     if eat > 100:
         eat = 100
+
     if drink > 100:
         drink = 100
+
     if sanitary > 100:
         sanitary = 100
+
     if eat >= 70 and drink >= 70 and sanitary >= 55:
         humans += 1
+
     if eat <= 30 and drink <= 30:
         research -= research * 0.005
+
     if sanitary <= 30:
         eat -= eat * 0.005
         drink -= drink * 0.005
+
     if research >= 100:
         print(Ru_V.victory)
         break
+
     print(round(humans), Ru_V.unit_humans)
     print(round(eat), Ru_V.unit_eat)
     print(round(drink), Ru_V.unit_drink)
