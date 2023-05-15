@@ -29,7 +29,7 @@ def sobitie(i, humans, eat, drink, research, sanitary):
 
         return humans, eat, drink, research, sanitary
 
-    if i == 2:
+    elif i == 2:
         print(Ru_V.event_2)
 
         eat -= eat * 0.15
@@ -48,7 +48,7 @@ def sobitie(i, humans, eat, drink, research, sanitary):
             return humans, eat, drink, research, sanitary
         if m1 == "нет":
             return humans, eat, drink, research, sanitary
-    if i == 4:
+    elif i == 4:
         m2 = input(Ru_V.event_4).lower()
         if m2 == "да":
             print(Ru_V.event_401)
@@ -57,11 +57,11 @@ def sobitie(i, humans, eat, drink, research, sanitary):
             print(Ru_V.event_402)
             research -= research * 0.07
             return humans, eat, drink, research, sanitary
-    if i == 5:
+    elif i == 5:
         print(Ru_V.event_5)
         research += research * 0.15
         return humans, eat, drink, research, sanitary
-    if i == 6:
+    elif i == 6:
         m3 = input(Ru_V.event_6).lower()
         if m3 == "да":
             print(Ru_V.event_601)
@@ -71,7 +71,7 @@ def sobitie(i, humans, eat, drink, research, sanitary):
             print(Ru_V.event_602)
             sanitary -= sanitary * 0.7
             return humans, eat, drink, research, sanitary
-    if i == 7:
+    elif i == 7:
         m4 = input(Ru_V.event_7).lower()
         if m4 == "да":
             print(Ru_V.event_701)
@@ -80,16 +80,16 @@ def sobitie(i, humans, eat, drink, research, sanitary):
             print(Ru_V.event_702)
             humans = 0
             return humans, eat, drink, research, sanitary
-    if i == 8:
+    elif i == 8:
         print(Ru_V.event_8)
         drink += drink * 0.2
         return humans, eat, drink, research, sanitary
-    if i == 9:
+    elif i == 9:
         print(Ru_V.event_9)
         humans -= 6
         research -= research * 0.1
         return humans, eat, drink, research, sanitary
-    if i == 10:
+    elif i == 10:
         m5 = input(Ru_V.event_10).lower()
         if m5 == "да":
             print(Ru_V.event_101)
