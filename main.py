@@ -1,31 +1,46 @@
 import Ru_Venera as Ru_V
-import random
 from random import choice
 from turtle import *
 
 
 def daily(population, hunger, thirst, sanitary, research):
-    hunger -= hunger * 0.005 * population
-    thirst -= thirst * 0.005 * population
-    sanitary -= sanitary * 0.005 * population
-    research += research * 0.05 * population
+    hunger -= population
+    thirst -= population
+    sanitary -= population
+    research += 0.25 * population
 
     print(Ru_V.daily)
     action = int(input('1 - выращивание еды, 2 - добыча воды, '
                        '3 - провести санобработку, 4 - провести исследование. '))
 
     if action == 1:
-        hunger += hunger * 0.01 * population
+        hunger += 3 * population
 
     elif action == 2:
-        thirst += thirst * 0.01 * population
+        thirst += 3 * population
 
     elif action == 3:
-        sanitary += sanitary * 0.01 * population
+        sanitary += 3 * population
 
     else:
-        research += research * 0.05 * population
+        research += 0.25 * population
 
+    if hunger and thirst >= 70 and sanitary >= 55:
+        population += 3
+
+    elif hunger or thirst <= 50:
+        population -= 2
+        research -= research * 0.15
+
+    elif sanitary <= 30:
+        hunger -= hunger * 0.05
+        thirst -= thirst * 0.05
+        population -= 2
+
+    return population, hunger, thirst, sanitary, research
+
+
+def resource_check(hunger, thirst, sanitary, research):
     hunger = max(hunger, 0)
     hunger = min(hunger, 100)
 
@@ -37,20 +52,7 @@ def daily(population, hunger, thirst, sanitary, research):
 
     research = max(research, 0)
 
-    if hunger and thirst >= 70 and sanitary >= 55:
-        population += 3
-        research += research * 0.005
-
-    elif hunger or thirst <= 50:
-        population -= 2
-        research -= research * 0.005
-
-    elif sanitary <= 30:
-        hunger -= hunger * 0.05
-        thirst -= thirst * 0.05
-        population -= 2
-
-    return population, hunger, thirst, sanitary, research
+    return hunger, thirst, sanitary, research
 
 
 def mars_event(i, population, hunger, thirst, sanitary, research):
@@ -624,17 +626,17 @@ moon_population = 10
 mars_population = 10
 venus_population = 10
 
-moon_hunger = 100
-mars_hunger = 100
-venus_hunger = 100
+moon_hunger = 60
+mars_hunger = 60
+venus_hunger = 60
 
-moon_thirst = 100
-mars_thirst = 100
-venus_thirst = 100
+moon_thirst = 60
+mars_thirst = 60
+venus_thirst = 60
 
-moon_sanitary = 100
-mars_sanitary = 100
-venus_sanitary = 100
+moon_sanitary = 70
+mars_sanitary = 70
+venus_sanitary = 70
 
 moon_research = 1
 mars_research = 1
@@ -684,6 +686,9 @@ while moon_flag or mars_flag or venus_flag:
             moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
                 moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
 
+        moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+            resource_check(moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
         print(f'Игрок {moon}, на лунной базе на данный момент:')
         print(round(moon_population), Ru_V.unit_humans)
         print(round(moon_hunger), Ru_V.unit_eat)
@@ -722,6 +727,9 @@ while moon_flag or mars_flag or venus_flag:
             venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research = \
                 sobitie(venus_c, venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research)
 
+        venus_hunger, venus_thirst, venus_sanitary, venus_research = \
+            resource_check(venus_hunger, venus_thirst, venus_sanitary, venus_research)
+
         print(f'Игрок {venus}, на базе Венеры на данный момент:')
         print(round(venus_population), Ru_V.unit_humans)
         print(round(venus_hunger), Ru_V.unit_eat)
@@ -759,6 +767,9 @@ while moon_flag or mars_flag or venus_flag:
             mars_var.remove(mars_c)
             mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research = \
                 mars_event(mars_c, mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research)
+
+        mars_hunger, mars_thirst, mars_sanitary, mars_research = \
+            resource_check(mars_hunger, mars_thirst, mars_sanitary, mars_research)
 
         print(f'Игрок {mars}, на марсианской базе на данный момент:')
         print(round(mars_population), Ru_V.unit_humans)
