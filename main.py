@@ -4,9 +4,9 @@ from turtle import *
 
 
 def daily(population, hunger, thirst, sanitary, research):
-    hunger -= population
-    thirst -= population
-    sanitary -= population
+    hunger -= 0.5 * population
+    thirst -= 0.5 * population
+    sanitary -= 0.5 * population
     research += 0.5 * population
 
     print(Ru_V.daily)
@@ -14,13 +14,13 @@ def daily(population, hunger, thirst, sanitary, research):
                        '3 - провести санобработку, 4 - провести исследование. '))
 
     if action == 1:
-        hunger += 4 * population
+        hunger += 3 * population
 
     elif action == 2:
-        thirst += 4 * population
+        thirst += 3 * population
 
     elif action == 3:
-        sanitary += 4 * population
+        sanitary += 3 * population
 
     else:
         research += 0.5 * population
