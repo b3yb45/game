@@ -770,12 +770,3 @@ while moon_flag or mars_flag or venus_flag:
     elif mars_research >= 100:
         mars_flag = False
         print(f'{mars}, ', Ru_V.victory)
-
-
-'''
-
-    if humans == 0:
-        print(Ru_V.game_over)
-        break
-
-'''
