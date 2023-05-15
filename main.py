@@ -5,25 +5,25 @@ from turtle import *
 
 
 def daily(population, hunger, thirst, sanitary, research):
-    hunger -= hunger * 0.05 * population
-    thirst -= thirst * 0.05 * population
-    sanitary -= sanitary * 0.05 * population
-    research += research * 0.05 * population
+    hunger -= hunger * 0.005 * population
+    thirst -= thirst * 0.005 * population
+    sanitary -= sanitary * 0.005 * population
+    research += research * 0.005 * population
 
     action = int(input('1 - выращивание еды, 2 - добыча воды, '
                        '3 - провести санобработку, 4 - провести исследование.'))
 
     if action == 1:
-        hunger += hunger * 0.1 * population
+        hunger += hunger * 0.01 * population
 
     elif action == 2:
-        thirst += thirst * 0.1 * population
+        thirst += thirst * 0.01 * population
 
     elif action == 3:
-        sanitary += sanitary * 0.1 * population
+        sanitary += sanitary * 0.01 * population
 
     else:
-        research += research * 0.05 * population
+        research += research * 0.005 * population
 
     hunger = max(hunger, 0)
     hunger = min(hunger, 100)
@@ -490,11 +490,7 @@ def game_over():
     done()
 
 
-research = 1
-sanitary = 100
-
-
-def sobitie(i, humans, eat, drink, research, sanitary):
+def sobitie(i, humans, eat, drink, sanitary, research):
     if i == 0:
         print(Ru_V.event_0)
 
@@ -588,15 +584,15 @@ venus_flag = True
 
 moon_population = 10
 mars_population = 10
-humans = 10
+venus_population = 10
 
 moon_hunger = 100
 mars_hunger = 100
-eat = 100
+venus_hunger = 100
 
 moon_thirst = 100
 mars_thirst = 100
-drink = 100
+venus_thirst = 100
 
 moon_sanitary = 100
 mars_sanitary = 100
@@ -608,7 +604,7 @@ venus_research = 1
 
 moon_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 mars_var = moon_var
-venus_events = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+venus_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 print(Ru_V.greeting)
 venus = input('Имена исследователей Марса: ')
@@ -631,6 +627,8 @@ while moon_flag or mars_flag or venus_flag:
 
     # Ход Луны
     if (moon_population > 0 or moon_research < 100) and moon_flag:
+        print(f'{moon}, Ваш ход!')
+
         moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
             daily(moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
 
@@ -647,40 +645,7 @@ while moon_flag or mars_flag or venus_flag:
             moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
                 moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
 
-        print(f'Игрок {moon}, на лунной базе на данныйй момент:')
-        print(round(moon_population), 'людей.')
-        print(round(moon_hunger), '- уровень голода.')
-        print(round(moon_thirst), '- уровень жажды.')
-        print(round(moon_sanitary), '- уровень чистоты.')
-        print(round(moon_research), '- прогресс исследования.')
-
-    elif moon_population <= 0:
-        moon_flag = False
-        print(f'{moon}, Вы не справились с миссией.')
-
-    elif moon_research >= 100:
-        moon_flag = False
-        print(f'{moon}, Вы успешно завершили миссию!')
-
-    # Ход Марса
-    if (moon_population > 0 or moon_research < 100) and moon_flag:
-        moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
-            daily(moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
-
-        if len(moon_var) >= 1:
-            moon_c = choice(moon_var)
-            moon_var.remove(moon_c)
-            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
-                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
-
-        else:
-            moon_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-            moon_c = choice(moon_var)
-            moon_var.remove(moon_c)
-            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
-                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
-
-        print(f'Игрок {moon}, на лунной базе на данныйй момент:')
+        print(f'Игрок {moon}, на лунной базе на данный момент:')
         print(round(moon_population), 'людей.')
         print(round(moon_hunger), '- уровень голода.')
         print(round(moon_thirst), '- уровень жажды.')
@@ -696,88 +661,84 @@ while moon_flag or mars_flag or venus_flag:
         print(f'{moon}, Вы успешно завершили миссию!')
 
     # Ход Венеры
-    if (moon_population > 0 or moon_research < 100) and moon_flag:
-        moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
-            daily(moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+    if (venus_population > 0 or venus_research < 100) and venus_flag:
+        print(f'{venus}, Ваш ход!')
 
-        if len(moon_var) >= 1:
-            moon_c = choice(moon_var)
-            moon_var.remove(moon_c)
-            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
-                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+        venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research = \
+            daily(venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research)
+
+        if len(venus_var) >= 1:
+            venus_c = choice(venus_var)
+            venus_var.remove(venus_c)
+            venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research = \
+                sobitie(venus_c, venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research)
 
         else:
-            moon_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-            moon_c = choice(moon_var)
-            moon_var.remove(moon_c)
-            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
-                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+            venus_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            venus_c = choice(venus_var)
+            venus_var.remove(venus_c)
+            venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research = \
+                sobitie(venus_c, venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research)
 
-        print(f'Игрок {moon}, на лунной базе на данныйй момент:')
-        print(round(moon_population), 'людей.')
-        print(round(moon_hunger), '- уровень голода.')
-        print(round(moon_thirst), '- уровень жажды.')
-        print(round(moon_sanitary), '- уровень чистоты.')
-        print(round(moon_research), '- прогресс исследования.')
+        print(f'Игрок {venus}, на лунной базе на данный момент:')
+        print(round(venus_population), 'людей.')
+        print(round(venus_hunger), '- уровень голода.')
+        print(round(venus_thirst), '- уровень жажды.')
+        print(round(venus_sanitary), '- уровень чистоты.')
+        print(round(venus_research), '- прогресс исследования.')
 
-    elif moon_population <= 0:
-        moon_flag = False
-        print(f'{moon}, Вы не справились с миссией.')
+    elif venus_population <= 0:
+        venus_flag = False
+        print(f'{venus}, Вы не справились с миссией.')
 
-    elif moon_research >= 100:
-        moon_flag = False
-        print(f'{moon}, Вы успешно завершили миссию!')
+    elif venus_research >= 100:
+        venus_flag = False
+        print(f'{venus}, Вы успешно завершили миссию!')
+
+    # Ход Марса
+    if (mars_population > 0 or mars_research < 100) and mars_flag:
+        print(f'{mars}, Ваш ход!')
+
+        mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research = \
+            daily(mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research)
+
+        if len(mars_var) >= 1:
+            mars_c = choice(mars_var)
+            mars_var.remove(mars_c)
+            mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research = \
+                mars_event(mars_c, mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research)
+
+        else:
+            mars_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            mars_c = choice(mars_var)
+            mars_var.remove(mars_c)
+            mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research = \
+                mars_event(mars_c, mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research)
+
+        print(f'Игрок {mars}, на лунной базе на данныйй момент:')
+        print(round(mars_population), 'людей.')
+        print(round(mars_hunger), '- уровень голода.')
+        print(round(mars_thirst), '- уровень жажды.')
+        print(round(mars_sanitary), '- уровень чистоты.')
+        print(round(mars_research), '- прогресс исследования.')
+
+    elif mars_population <= 0:
+        mars_flag = False
+        print(f'{mars}, Вы не справились с миссией.')
+
+    elif mars_research >= 100:
+        mars_flag = False
+        print(f'{mars}, Вы успешно завершили миссию!')
 
 
-while humans != 0:
-    day += 1
+'''
     print(Ru_V.unit_day, day)
     c = input(Ru_V.daily).lower()
-
-    if c == 1:
-        eat += eat * 0.05
-        drink -= drink * 0.001 * humans
-        sanitary -= sanitary * 0.005 * humans
-        research += research * 0.5 * humans * 0.1
-
-    elif c == 2:
-        drink += drink * 0.05
-        eat -= eat * 0.001 * humans
-        sanitary -= sanitary * 0.005 * humans
-        research += research * 0.5 * humans * 0.1
-
-    elif c == 3:
-        sanitary += sanitary * 0.5
-        eat -= eat * 0.001 * humans
-        drink -= drink * 0.001 * humans
-        research += research * 0.5 * humans * 0.1
-
-    elif c == 4:
-        research += research * humans * 0.1
-        eat -= eat * 0.001 * humans
-        drink -= drink * 0.001 * humans
-        sanitary -= sanitary * 0.005 * humans
-    else:
-        research += research * humans * 0.1
-        eat -= eat * 0.001 * humans
-        drink -= drink * 0.001 * humans
-        sanitary -= sanitary * 0.005 * humans
-
-    event_number = random.choice(venus_events)
-    humans, eat, drink, research, sanitary = sobitie(event_number, humans, eat, drink, research, sanitary)
 
     if humans == 0:
         print(Ru_V.game_over)
         break
 
-    if eat > 100:
-        eat = 100
-
-    if drink > 100:
-        drink = 100
-
-    if sanitary > 100:
-        sanitary = 100
 
     if eat >= 70 and drink >= 70 and sanitary >= 55:
         humans += 1
@@ -799,3 +760,4 @@ while humans != 0:
     print(round(research), Ru_V.unit_research)
     print(round(sanitary), Ru_V.unit_sanitary)
     
+'''
