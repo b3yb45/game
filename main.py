@@ -3,25 +3,63 @@ import random
 from random import choice
 from turtle import *
 
-population = 20
-hunger = 100
-thirst = 100
-sanitary = 100
-research = 1
-day = 0
-var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-mars = input('Имена исследователей Марса: ')
-print(mars+','+' добро пожаловать на исследовательскую станцию Марса!')
+def daily(population, hunger, thirst, sanitary, research):
+    hunger -= hunger * 0.05 * population
+    thirst -= thirst * 0.05 * population
+    sanitary -= sanitary * 0.05 * population
+    research += research * 0.05 * population
+
+    action = int(input('1 - выращивание еды, 2 - добыча воды, '
+                       '3 - провести санобработку, 4 - провести исследование.'))
+
+    if action == 1:
+        hunger += hunger * 0.1 * population
+
+    elif action == 2:
+        thirst += thirst * 0.1 * population
+
+    elif action == 3:
+        sanitary += sanitary * 0.1 * population
+
+    else:
+        research += research * 0.05 * population
+
+    hunger = max(hunger, 0)
+    hunger = min(hunger, 100)
+
+    thirst = max(thirst, 0)
+    thirst = min(thirst, 100)
+
+    sanitary = max(sanitary, 0)
+    sanitary = min(sanitary, 100)
+
+    hunger = max(hunger, 0)
+    hunger = min(hunger, 100)
+
+    research = max(research, 0)
+
+    if hunger and thirst >= 70 and sanitary >= 55:
+        population += 3
+        research += research * 0.005
+
+    elif hunger or thirst <= 50:
+        population -= 2
+        research -= research * 0.005
+
+    elif sanitary <= 30:
+        hunger -= hunger * 0.05
+        thirst -= thirst * 0.05
+        population -= 2
+
+    return population, hunger, thirst, sanitary, research
 
 
-def event(i, population, hunger, thirst, sanitary, research):
+def mars_event(i, population, hunger, thirst, sanitary, research):
     if i == 0:
-        var.remove(0)
         print('К счастью или сожалению, сегодня ничего интересного не произошло.')
         return population, hunger, thirst, sanitary, research
     elif i == 1:
-        var.remove(1)
         print('На поверхности защитного купола образовалась трещина, радиоактивный фон повышается.\n'
               "1 - отправить инженеров для ремонта и рискнуть их жизнями.\n"
               "2 - срочно заблокировать отсек вместе с людьми в нём.")
@@ -34,7 +72,6 @@ def event(i, population, hunger, thirst, sanitary, research):
             population -= 10
         return population, hunger, thirst, sanitary, research
     elif i == 2:
-        var.remove(2)
         print('Ваши исследователи обнаружили некое существо, сильно напоминающее лицехвата из "Чужого."\n'
               '1 - принести существо на базу.\n'
               '2 - оставить от греха подальше.')
@@ -46,7 +83,6 @@ def event(i, population, hunger, thirst, sanitary, research):
             print("Вы оставили существо там, где нашли и мирно ушли на базу. Ничего не произошло.")
         return population, hunger, thirst, sanitary, research
     elif i == 3:
-        var.remove(3)
         print('Исследователи обнаружили новый вид бактерий около небольшой пещеры.\n'
               '1 - взять небольшой образец и вернуться на базу.\n'
               '2 - заглянуть в пещеру в надежде собрать больше образцов.')
@@ -59,7 +95,6 @@ def event(i, population, hunger, thirst, sanitary, research):
             research += research * 0.15
         return population, hunger, thirst, sanitary, research
     elif i == 4:
-        var.remove(4)
         print('От вентиляции исходит неприятный запах.\n'
               '1 - искать источник запаха.\n'
               '2 - не обращать внимние')
@@ -73,7 +108,6 @@ def event(i, population, hunger, thirst, sanitary, research):
             thirst -= thirst * 0.1
         return population, hunger, thirst, sanitary, research
     elif i == 5:
-        var.remove(5)
         print('Кажется, что жители базы заскучали.\n'
               '1 - потрататить немного еды и устроить вечеринку.\n'
               '2 - подарить им губозакатывательный аппарат.')
@@ -89,7 +123,6 @@ def event(i, population, hunger, thirst, sanitary, research):
             sanitary += sanitary * 0.02
         return population, hunger, thirst, sanitary, research
     elif i == 6:
-        var.remove(6)
         print('Исследователи обнаружили новое растения, для изучения его питательных свойств им нужен доброволец.\n'
               '1 - предоставить добровольца.\n'
               '2 - отказать.')
@@ -101,7 +134,6 @@ def event(i, population, hunger, thirst, sanitary, research):
             print('Говорят, что любопытной Варваре на базаре нос оторвали, но может таки стоило рискнуть?')
         return population, hunger, thirst, sanitary, research
     elif i == 7:
-        var.remove(7)
         print('К базе подбежал неизвестный пушистый зверёк, кажется он зовёт нас куда-то.\n'
               '1 - Отправить группу вслед.\n'
               '2 - Проигнорировать.')
@@ -114,7 +146,6 @@ def event(i, population, hunger, thirst, sanitary, research):
             print('У автора возникли вопросики к вашей человечности...')
         return population, hunger, thirst, sanitary, research
     elif i == 8:
-        var.remove(8)
         print('Появилась возможность запросить ресурсы у Земли.\n'
               '1 - запросить продовольствие.\n'
               '2 - запросить питьевую воду.\n'
@@ -135,7 +166,6 @@ def event(i, population, hunger, thirst, sanitary, research):
             research += research * 0.1
         return population, hunger, thirst, sanitary, research
     elif i == 9:
-        var.remove(9)
         print('К вам подошёл один из учёных и сообщил, что для ускорение исследования нужно 5 подопытных людей.\n'
               '1 - согласиться.\n'
               '2 - отказать.')
@@ -146,6 +176,181 @@ def event(i, population, hunger, thirst, sanitary, research):
             research += research * 0.15
         else:
             print('Вы отказали учёному.')
+        return population, hunger, thirst, sanitary, research
+
+
+def moon_event(i, population, hunger, thirst, sanitary, research):
+    if i == 0:
+        print('К счастью или сожалению, сегодня ничего интересного не произошло.')
+
+        return population, hunger, thirst, sanitary, research
+
+    elif i == 1:
+        print('На поверхности защитного купола образовалась трещина, радиоактивный фон повышается.\n'
+              "1 - отправить инженеров для ремонта и рискнуть их жизнями.\n"
+              "2 - срочно заблокировать отсек вместе с людьми в нём.")
+
+        var_1 = int(input())
+        if var_1 == 1:
+            print('Пробоина была успешно закрыта, однако несколько инженеров погибли из-за острой лучевой болезни.')
+            population -= 2
+
+        else:
+            print('Отсек был заблокирован, все люди внутри погибли.')
+            population -= 4
+
+        return population, hunger, thirst, sanitary, research
+
+    elif i == 2:
+        print('Ваши исследователи обнаружили некое существо, сильно напоминающее лицехвата из "Чужого."\n'
+              '1 - принести существо на базу.\n'
+              '2 - оставить от греха подальше.')
+
+        var_2 = int(input())
+        if var_2 == 1:
+            print('Кто бы мог подумать! Паразит начал бросаться на людей, отсек заблокировали вместе с людьми.')
+            population -= 4
+
+        else:
+            print("Вы оставили существо там, где нашли и мирно ушли на базу. Ничего не произошло.")
+
+        return population, hunger, thirst, sanitary, research
+
+    elif i == 3:
+        print('Исследователи обнаружили новый вид бактерий около небольшой пещеры.\n'
+              '1 - взять небольшой образец и вернуться на базу.\n'
+              '2 - заглянуть в пещеру в надежде собрать больше образцов.')
+
+        var_3 = int(input())
+        if var_3 == 1:
+            print('Изучив новый вид бактерий вы немного продвинулись в исследовании. Жаль, что образец был невелик.')
+            research += research * 0.05
+
+        else:
+            print('Этот вид бактерий оказался крайне полезным для вашего исследования. Вы значительно продвинулись.')
+            research += research * 0.15
+
+        return population, hunger, thirst, sanitary, research
+
+    elif i == 4:
+        print('От вентиляции исходит неприятный запах.\n'
+              '1 - искать источник запаха.\n'
+              '2 - не обращать внимние')
+
+        var_4 = int(input())
+        if var_4 == 1:
+            print('Засорился фильтр, как это могли не заметить?')
+            sanitary += sanitary * 0.1
+
+        else:
+            print('Судя по всему, то, от чего исходил запах, попало в один из источников воды.')
+            sanitary -= sanitary * 0.05
+            thirst -= thirst * 0.1
+
+        return population, hunger, thirst, sanitary, research
+
+    elif i == 5:
+        print('Вы обнаружили богатое месторождение гелия.\n'
+              '1 - потратить часть запасов на исследование.\n'
+              '2 - игнорировать.')
+
+        var_5 = int(input())
+        if var_5 == 1:
+            print('Вам удалось добыть большое количество образцов для дальнейшего исследования и эксплуатации.')
+            hunger -= hunger * 0.1
+            thirst -= thirst * 0.1
+            sanitary -= sanitary * 0.1
+            research += 0.15
+
+        else:
+            print('Ничего не произошло.')
+
+        return population, hunger, thirst, sanitary, research
+
+    elif i == 6:
+        print('Ученые предсказывают скорое усиление солнечного ветра.\n'
+              '1 - потратить часть запасов на защитные меры.\n'
+              '2 - игнорировать.')
+
+        var_6 = int(input())
+        if var_6 == 1:
+            print('Благодаря предпринятым мерам никто не пострадал.')
+            hunger -= hunger * 0.1
+            thirst -= thirst * 0.1
+            sanitary -= sanitary * 0.1
+
+        else:
+            print('Последствия ужасны. Часть персонала погибла, оборудование вышло из строя,'
+                  ' еда и вода портятся из-за перебоев электричества.')
+            population -= 5
+            thirst -= thirst * 0.5
+            sanitary -= sanitary * 0.3
+            hunger -= hunger * 0.5
+            research -= research * 0.2
+
+        return population, hunger, thirst, sanitary, research
+
+    elif i == 7:
+        print('Вы улавливаете странный сигнал.\n'
+              '1 - Исследовать.\n'
+              '2 - Проигнорировать.')
+
+        var_7 = int(input())
+        if var_7 == 1:
+            print('Отследив сигнал группа ученых спускается в пещеру. Там они обнаруживают старый луноход, '
+                  'связь с котороым была потеряна. '
+                  'За время своей автоматической работы он собрал большое количество образцов и данных. '
+                  'Также, вы приводите его в рабочее состояние.')
+            hunger -= hunger * 0.1
+            thirst -= thirst * 0.1
+            research += research * 0.15
+
+        else:
+            print('По какой-то причине ученые стали находить меньше образцов неподалеку от базы.')
+            research -= research * 0.05
+
+        return population, hunger, thirst, sanitary, research
+
+    elif i == 8:
+        print('Появилась возможность запросить ресурсы у Земли.\n'
+              '1 - запросить продовольствие.\n'
+              '2 - запросить питьевую воду.\n'
+              '3 - запросить робот - пылесос.\n'
+              "4 - запросить исследовательское оборудование.")
+
+        var_8 = int(input())
+        if var_8 == 1:
+            print('Продовольствие было доставлено на базу.')
+            hunger += hunger * 0.1
+
+        elif var_8 == 2:
+            print('Запасы питьевой воды были доставлены на базу.')
+            thirst += thirst * 0.1
+
+        elif var_8 == 3:
+            print('Несколько роботов - пылесосов были доставлены на базу.')
+            sanitary += sanitary * 0.1
+
+        else:
+            print('Новое оборудование было доставлено на базу.')
+            research += research * 0.1
+
+        return population, hunger, thirst, sanitary, research
+
+    elif i == 9:
+        print('К вам подошёл один из учёных и сообщил, что для ускорения исследования нужно 5 подопытных людей.\n'
+              '1 - согласиться.\n'
+              '2 - отказать.')
+
+        var_9 = int(input())
+        if var_9 == 1:
+            print('Вы пожертвовали 5 человек на благо науки. исследование продвинулось.')
+            population -= 5
+            research += research * 0.15
+
+        else:
+            print('Вы отказали учёному.')
+
         return population, hunger, thirst, sanitary, research
 
 
@@ -285,88 +490,8 @@ def game_over():
     done()
 
 
-while population > 0 or research < 100:
-    day += 1
-    print('День', day)
-    action = int(input('1 - выращивание еды, 2 - добыча воды, \n'
-                       '3 - провести санобработку, 4 - провести исследование.'))
-    if action == 1:
-        hunger += hunger * 0.01 * population
-        thirst -= thirst * 0.002 * population
-        sanitary -= sanitary * 0.005 * population
-        research += research * 0.4
-    elif action == 2:
-        hunger -= hunger * 0.003 * population
-        thirst += thirst * 0.01 * population
-        sanitary -= sanitary * 0.004 * population
-        research += research * 0.5
-    elif action == 3:
-        hunger -= hunger * 0.003 * population
-        thirst -= thirst * 0.004 * population
-        sanitary += sanitary * 0.02 * population
-        research += research * 0.05
-    else:
-        hunger -= hunger * 0.003 * population
-        thirst -= thirst * 0.004 * population
-        sanitary -= sanitary * 0.003 * population
-        research += research
-
-    if len(var) >= 1:
-        c = choice(var)
-        population, hunger, thirst, sanitary, research = event(c, population, hunger, thirst, sanitary, research)
-    else:
-        var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        c = choice(var)
-        population, hunger, thirst, sanitary, research = event(c, population, hunger, thirst, sanitary, research)
-
-    if population <= 0:
-        print('Вы не справились с миссией.')
-        game_over()
-        break
-    elif research >= 100:
-        print('Вы успешно завершили миссию!')
-        break
-    elif hunger > 100:
-        hunger = 100
-    elif hunger < 0:
-        hunger = 0
-    elif thirst > 100:
-        thirst = 100
-    elif thirst < 0:
-        thirst = 0
-    elif sanitary > 100:
-        sanitary = 100
-    elif sanitary < 0:
-        sanitary = 0
-    elif research < 0:
-        research = 0
-    elif hunger >= 70 and thirst >= 70 and sanitary >= 55:
-        population += 2
-        research += research * 0.005
-    elif hunger <= 50 or thirst <= 50:
-        population -= 5
-        research -= research * 0.005
-    elif sanitary <= 30:
-        hunger -= hunger * 0.05
-        thirst -= thirst * 0.05
-        population -= 5
-    print(round(population), 'людей на базе.')
-    print(round(hunger), '- уровень голода.')
-    print(round(thirst), '- уровень жажды.')
-    print(round(sanitary), '- уровень чистоты.')
-    print(round(research), '- прогресс исследования.')
-
-
-print(Ru_V.greeting)
-
-humans = 10
-eat = 100
-drink = 100
 research = 1
 sanitary = 100
-day = 0
-
-venus_events = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 def sobitie(i, humans, eat, drink, research, sanitary):
@@ -455,13 +580,162 @@ def sobitie(i, humans, eat, drink, research, sanitary):
             return humans, eat, drink, research, sanitary
 
 
+day = 0
+
+moon_flag = True
+mars_flag = True
+venus_flag = True
+
+moon_population = 10
+mars_population = 10
+humans = 10
+
+moon_hunger = 100
+mars_hunger = 100
+eat = 100
+
+moon_thirst = 100
+mars_thirst = 100
+drink = 100
+
+moon_sanitary = 100
+mars_sanitary = 100
+venus_sanitary = 100
+
+moon_research = 1
+mars_research = 1
+venus_research = 1
+
+moon_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+mars_var = moon_var
+venus_events = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+print(Ru_V.greeting)
+venus = input('Имена исследователей Марса: ')
+print(venus+','+' добро пожаловать на исследовательскую станцию Марса!')
+
+mars = input('Имена исследователей Марса: ')
+print(mars+','+' добро пожаловать на исследовательскую станцию Марса!')
+
+moon = input('Имена исследователей Луны: ')
+print(moon+','+' добро пожаловать на исследовательскую станцию Луны!')
+
+while moon_flag or mars_flag or venus_flag:
+    if not moon_flag and not mars_flag and not venus_flag:
+        print('Все игроки проиграли. Игра окончена.')
+        game_over()
+        break
+
+    day += 1
+    print('День', day)
+
+    # Ход Луны
+    if (moon_population > 0 or moon_research < 100) and moon_flag:
+        moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+            daily(moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
+        if len(moon_var) >= 1:
+            moon_c = choice(moon_var)
+            moon_var.remove(moon_c)
+            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
+        else:
+            moon_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            moon_c = choice(moon_var)
+            moon_var.remove(moon_c)
+            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
+        print(f'Игрок {moon}, на лунной базе на данныйй момент:')
+        print(round(moon_population), 'людей.')
+        print(round(moon_hunger), '- уровень голода.')
+        print(round(moon_thirst), '- уровень жажды.')
+        print(round(moon_sanitary), '- уровень чистоты.')
+        print(round(moon_research), '- прогресс исследования.')
+
+    elif moon_population <= 0:
+        moon_flag = False
+        print(f'{moon}, Вы не справились с миссией.')
+
+    elif moon_research >= 100:
+        moon_flag = False
+        print(f'{moon}, Вы успешно завершили миссию!')
+
+    # Ход Марса
+    if (moon_population > 0 or moon_research < 100) and moon_flag:
+        moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+            daily(moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
+        if len(moon_var) >= 1:
+            moon_c = choice(moon_var)
+            moon_var.remove(moon_c)
+            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
+        else:
+            moon_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            moon_c = choice(moon_var)
+            moon_var.remove(moon_c)
+            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
+        print(f'Игрок {moon}, на лунной базе на данныйй момент:')
+        print(round(moon_population), 'людей.')
+        print(round(moon_hunger), '- уровень голода.')
+        print(round(moon_thirst), '- уровень жажды.')
+        print(round(moon_sanitary), '- уровень чистоты.')
+        print(round(moon_research), '- прогресс исследования.')
+
+    elif moon_population <= 0:
+        moon_flag = False
+        print(f'{moon}, Вы не справились с миссией.')
+
+    elif moon_research >= 100:
+        moon_flag = False
+        print(f'{moon}, Вы успешно завершили миссию!')
+
+    # Ход Венеры
+    if (moon_population > 0 or moon_research < 100) and moon_flag:
+        moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+            daily(moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
+        if len(moon_var) >= 1:
+            moon_c = choice(moon_var)
+            moon_var.remove(moon_c)
+            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
+        else:
+            moon_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            moon_c = choice(moon_var)
+            moon_var.remove(moon_c)
+            moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
+                moon_event(moon_c, moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
+
+        print(f'Игрок {moon}, на лунной базе на данныйй момент:')
+        print(round(moon_population), 'людей.')
+        print(round(moon_hunger), '- уровень голода.')
+        print(round(moon_thirst), '- уровень жажды.')
+        print(round(moon_sanitary), '- уровень чистоты.')
+        print(round(moon_research), '- прогресс исследования.')
+
+    elif moon_population <= 0:
+        moon_flag = False
+        print(f'{moon}, Вы не справились с миссией.')
+
+    elif moon_research >= 100:
+        moon_flag = False
+        print(f'{moon}, Вы успешно завершили миссию!')
+
+
 while humans != 0:
     day += 1
     print(Ru_V.unit_day, day)
     c = input(Ru_V.daily).lower()
 
     if c == 1:
-        eat += eat*0.05
+        eat += eat * 0.05
         drink -= drink * 0.001 * humans
         sanitary -= sanitary * 0.005 * humans
         research += research * 0.5 * humans * 0.1
