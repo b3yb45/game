@@ -8,11 +8,11 @@ def daily(population, hunger, thirst, sanitary, research):
     hunger -= hunger * 0.005 * population
     thirst -= thirst * 0.005 * population
     sanitary -= sanitary * 0.005 * population
-    research += research * 0.005 * population
+    research += research * 0.05 * population
 
     print(Ru_V.daily)
     action = int(input('1 - выращивание еды, 2 - добыча воды, '
-                       '3 - провести санобработку, 4 - провести исследование.'))
+                       '3 - провести санобработку, 4 - провести исследование. '))
 
     if action == 1:
         hunger += hunger * 0.01 * population
@@ -24,7 +24,7 @@ def daily(population, hunger, thirst, sanitary, research):
         sanitary += sanitary * 0.01 * population
 
     else:
-        research += research * 0.005 * population
+        research += research * 0.05 * population
 
     hunger = max(hunger, 0)
     hunger = min(hunger, 100)
@@ -34,9 +34,6 @@ def daily(population, hunger, thirst, sanitary, research):
 
     sanitary = max(sanitary, 0)
     sanitary = min(sanitary, 100)
-
-    hunger = max(hunger, 0)
-    hunger = min(hunger, 100)
 
     research = max(research, 0)
 
@@ -649,7 +646,7 @@ venus_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 print(Ru_V.greeting)
 venus = input('Имена исследователей Венеры: ')
-print(venus+','+' добро пожаловать на исследовательскую станцию Марса!')
+print(venus+','+' добро пожаловать на исследовательскую станцию Венеры!')
 
 mars = input('Имена исследователей Марса: ')
 print(mars+','+' добро пожаловать на исследовательскую станцию Марса!')
@@ -665,6 +662,7 @@ while moon_flag or mars_flag or venus_flag:
 
     day += 1
     print(Ru_V.unit_day, day)
+    print('')
 
     # Ход Луны
     if (moon_population > 0 or moon_research < 100) and moon_flag:
@@ -692,14 +690,17 @@ while moon_flag or mars_flag or venus_flag:
         print(round(moon_thirst), Ru_V.unit_drink)
         print(round(moon_sanitary), Ru_V.unit_sanitary)
         print(round(moon_research), Ru_V.unit_research)
+        print('')
 
     elif moon_population <= 0:
         moon_flag = False
         print(f'{moon}, ', Ru_V.game_over)
+        print('')
 
     elif moon_research >= 100:
         moon_flag = False
         print(f'{moon}, ', Ru_V.victory)
+        print('')
 
     # Ход Венеры
     if (venus_population > 0 or venus_research < 100) and venus_flag:
@@ -727,14 +728,17 @@ while moon_flag or mars_flag or venus_flag:
         print(round(venus_thirst), Ru_V.unit_drink)
         print(round(venus_sanitary), Ru_V.unit_sanitary)
         print(round(venus_research), Ru_V.unit_research)
+        print('')
 
     elif venus_population <= 0:
         venus_flag = False
         print(f'{venus}, ', Ru_V.game_over)
+        print('')
 
     elif venus_research >= 100:
         venus_flag = False
         print(f'{venus}, ', Ru_V.victory)
+        print('')
 
     # Ход Марса
     if (mars_population > 0 or mars_research < 100) and mars_flag:
@@ -762,11 +766,14 @@ while moon_flag or mars_flag or venus_flag:
         print(round(mars_thirst), Ru_V.unit_drink)
         print(round(mars_sanitary), Ru_V.unit_sanitary)
         print(round(mars_research), Ru_V.unit_research)
+        print('')
 
     elif mars_population <= 0:
         mars_flag = False
         print(f'{mars}, ', Ru_V.game_over)
+        print('')
 
     elif mars_research >= 100:
         mars_flag = False
         print(f'{mars}, ', Ru_V.victory)
+        print('')
