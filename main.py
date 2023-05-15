@@ -7,35 +7,35 @@ def daily(population, hunger, thirst, sanitary, research):
     hunger -= population
     thirst -= population
     sanitary -= population
-    research += 0.25 * population
+    research += 0.5 * population
 
     print(Ru_V.daily)
     action = int(input('1 - выращивание еды, 2 - добыча воды, '
                        '3 - провести санобработку, 4 - провести исследование. '))
 
     if action == 1:
-        hunger += 3 * population
+        hunger += 4 * population
 
     elif action == 2:
-        thirst += 3 * population
+        thirst += 4 * population
 
     elif action == 3:
-        sanitary += 3 * population
+        sanitary += 4 * population
 
     else:
-        research += 0.25 * population
+        research += 0.5 * population
 
     if hunger and thirst >= 70 and sanitary >= 55:
-        population += 3
+        population += 2
 
     elif hunger or thirst <= 50:
-        population -= 2
+        population -= 1
         research -= research * 0.15
 
     elif sanitary <= 30:
         hunger -= hunger * 0.05
         thirst -= thirst * 0.05
-        population -= 2
+        population -= 1
 
     return population, hunger, thirst, sanitary, research
 
@@ -535,7 +535,7 @@ def sobitie(i, humans, eat, drink, sanitary, research):
     if i == 0:
         print(Ru_V.event_0)
 
-        return humans, eat, drink, research, sanitary
+        return humans, eat, drink, sanitary, research
 
     elif i == 1:
         print(Ru_V.event_1)
@@ -544,7 +544,7 @@ def sobitie(i, humans, eat, drink, sanitary, research):
         eat += eat * 0.03
         drink += drink * 0.03
 
-        return humans, eat, drink, research, sanitary
+        return humans, eat, drink, sanitary, research
 
     elif i == 2:
         print(Ru_V.event_2)
@@ -554,67 +554,90 @@ def sobitie(i, humans, eat, drink, sanitary, research):
         research -= research * 0.08
         sanitary -= sanitary * 0.1
 
-        return humans, eat, drink, research, sanitary
+        return humans, eat, drink, sanitary, research
 
     elif i == 3:
         m1 = input(Ru_V.event_3).lower()
         if m1 == "да":
             print(Ru_V.event_301)
             research += research * 0.25
-            humans -= 3
-            return humans, eat, drink, research, sanitary
+            humans -= 2
+
+            return humans, eat, drink, sanitary, research
+
         if m1 == "нет":
-            return humans, eat, drink, research, sanitary
+            return humans, eat, drink, sanitary, research
+
     elif i == 4:
         m2 = input(Ru_V.event_4).lower()
+
         if m2 == "да":
             print(Ru_V.event_401)
-            return humans, eat, drink, research, sanitary
+            return humans, eat, drink, sanitary, research
+
         if m2 == "нет":
             print(Ru_V.event_402)
             research -= research * 0.07
-            return humans, eat, drink, research, sanitary
+
+            return humans, eat, drink, sanitary, research
+
     elif i == 5:
         print(Ru_V.event_5)
         research += research * 0.15
-        return humans, eat, drink, research, sanitary
+
+        return humans, eat, drink, sanitary, research
+
     elif i == 6:
         m3 = input(Ru_V.event_6).lower()
+
         if m3 == "да":
             print(Ru_V.event_601)
-            research += research * 0.1
-            return humans, eat, drink, research, sanitary
+            research += research * 0.15
+
+            return humans, eat, drink, sanitary, research
+
         if m3 == "нет":
             print(Ru_V.event_602)
-            sanitary -= sanitary * 0.7
-            return humans, eat, drink, research, sanitary
+            sanitary -= sanitary * 0.25
+
+            return humans, eat, drink, sanitary, research
+
     elif i == 7:
         m4 = input(Ru_V.event_7).lower()
         if m4 == "да":
             print(Ru_V.event_701)
-            return humans, eat, drink, research, sanitary
+            return humans, eat, drink, sanitary, research
+
         if m4 == "нет":
             print(Ru_V.event_702)
             humans = 0
-            return humans, eat, drink, research, sanitary
+
+            return humans, eat, drink, sanitary, research
+
     elif i == 8:
         print(Ru_V.event_8)
         drink += drink * 0.2
-        return humans, eat, drink, research, sanitary
+
+        return humans, eat, drink, sanitary, research
+
     elif i == 9:
         print(Ru_V.event_9)
-        humans -= 6
+        humans -= 3
         research -= research * 0.1
-        return humans, eat, drink, research, sanitary
+
+        return humans, eat, drink, sanitary, research
+
     elif i == 10:
         m5 = input(Ru_V.event_10).lower()
         if m5 == "да":
             print(Ru_V.event_101)
-            research -= research * 0.9
-            return humans, eat, drink, research, sanitary
+            research -= research * 0.3
+
+            return humans, eat, drink, sanitary, research
+
         if m5 == "нет":
             print(Ru_V.event_101)
-            return humans, eat, drink, research, sanitary
+            return humans, eat, drink, sanitary, research
 
 
 day = 0
@@ -627,13 +650,13 @@ moon_population = 10
 mars_population = 10
 venus_population = 10
 
-moon_hunger = 60
-mars_hunger = 60
-venus_hunger = 60
+moon_hunger = 70
+mars_hunger = 70
+venus_hunger = 70
 
-moon_thirst = 60
-mars_thirst = 60
-venus_thirst = 60
+moon_thirst = 70
+mars_thirst = 70
+venus_thirst = 70
 
 moon_sanitary = 70
 mars_sanitary = 70
