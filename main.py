@@ -565,7 +565,7 @@ def sobitie(i, humans, eat, drink, sanitary, research):
 
             return humans, eat, drink, sanitary, research
 
-        if m1 == "нет":
+        else:
             return humans, eat, drink, sanitary, research
 
     elif i == 4:
@@ -575,7 +575,7 @@ def sobitie(i, humans, eat, drink, sanitary, research):
             print(Ru_V.event_401)
             return humans, eat, drink, sanitary, research
 
-        if m2 == "нет":
+        else:
             print(Ru_V.event_402)
             research -= research * 0.07
 
@@ -596,7 +596,7 @@ def sobitie(i, humans, eat, drink, sanitary, research):
 
             return humans, eat, drink, sanitary, research
 
-        if m3 == "нет":
+        else:
             print(Ru_V.event_602)
             sanitary -= sanitary * 0.25
 
@@ -608,7 +608,7 @@ def sobitie(i, humans, eat, drink, sanitary, research):
             print(Ru_V.event_701)
             return humans, eat, drink, sanitary, research
 
-        if m4 == "нет":
+        else:
             print(Ru_V.event_702)
             humans = 0
 
@@ -635,7 +635,7 @@ def sobitie(i, humans, eat, drink, sanitary, research):
 
             return humans, eat, drink, sanitary, research
 
-        if m5 == "нет":
+        else:
             print(Ru_V.event_101)
             return humans, eat, drink, sanitary, research
 
@@ -650,17 +650,17 @@ moon_population = 10
 mars_population = 10
 venus_population = 10
 
-moon_hunger = 70
-mars_hunger = 70
-venus_hunger = 70
+moon_hunger = 100
+mars_hunger = 100
+venus_hunger = 100
 
-moon_thirst = 70
-mars_thirst = 70
-venus_thirst = 70
+moon_thirst = 100
+mars_thirst = 100
+venus_thirst = 100
 
-moon_sanitary = 70
-mars_sanitary = 70
-venus_sanitary = 70
+moon_sanitary = 100
+mars_sanitary = 100
+venus_sanitary = 100
 
 moon_research = 1
 mars_research = 1
