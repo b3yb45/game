@@ -648,7 +648,7 @@ mars_var = moon_var
 venus_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 print(Ru_V.greeting)
-venus = input('Имена исследователей Марса: ')
+venus = input('Имена исследователей Венеры: ')
 print(venus+','+' добро пожаловать на исследовательскую станцию Марса!')
 
 mars = input('Имена исследователей Марса: ')
@@ -664,7 +664,7 @@ while moon_flag or mars_flag or venus_flag:
         break
 
     day += 1
-    print('День', day)
+    print(Ru_V.unit_day, day)
 
     # Ход Луны
     if (moon_population > 0 or moon_research < 100) and moon_flag:
@@ -695,11 +695,11 @@ while moon_flag or mars_flag or venus_flag:
 
     elif moon_population <= 0:
         moon_flag = False
-        print(f'{moon}, Вы не справились с миссией.')
+        print(f'{moon}, ', Ru_V.game_over)
 
     elif moon_research >= 100:
         moon_flag = False
-        print(f'{moon},', Ru_V.victory)
+        print(f'{moon}, ', Ru_V.victory)
 
     # Ход Венеры
     if (venus_population > 0 or venus_research < 100) and venus_flag:
@@ -730,11 +730,11 @@ while moon_flag or mars_flag or venus_flag:
 
     elif venus_population <= 0:
         venus_flag = False
-        print(f'{venus}, Вы не справились с миссией.')
+        print(f'{venus}, ', Ru_V.game_over)
 
     elif venus_research >= 100:
         venus_flag = False
-        print(f'{venus}, Вы успешно завершили миссию!')
+        print(f'{venus}, ', Ru_V.victory)
 
     # Ход Марса
     if (mars_population > 0 or mars_research < 100) and mars_flag:
@@ -765,35 +765,17 @@ while moon_flag or mars_flag or venus_flag:
 
     elif mars_population <= 0:
         mars_flag = False
-        print(f'{mars}, Вы не справились с миссией.')
+        print(f'{mars}, ', Ru_V.game_over)
 
     elif mars_research >= 100:
         mars_flag = False
-        print(f'{mars}, Вы успешно завершили миссию!')
+        print(f'{mars}, ', Ru_V.victory)
 
 
 '''
-    print(Ru_V.unit_day, day)
-    c = input(Ru_V.daily).lower()
 
     if humans == 0:
         print(Ru_V.game_over)
         break
 
-
-    if eat >= 70 and drink >= 70 and sanitary >= 55:
-        humans += 1
-
-    if eat <= 30 and drink <= 30:
-        research -= research * 0.005
-
-    if sanitary <= 30:
-        eat -= eat * 0.005
-        drink -= drink * 0.005
-
-    if research >= 100:
-        print(Ru_V.victory)
-        break
-
-    
 '''
