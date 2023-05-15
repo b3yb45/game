@@ -105,25 +105,30 @@ while humans != 0:
     print(Ru_V.unit_day, day)
     c = input(Ru_V.daily).lower()
 
-    if c == "садоводство":
+    if c == 1:
         eat += eat*0.05
         drink -= drink * 0.001 * humans
         sanitary -= sanitary * 0.005 * humans
         research += research * 0.5 * humans * 0.1
 
-    elif c == "добыча воды":
+    elif c == 2:
         drink += drink * 0.05
         eat -= eat * 0.001 * humans
         sanitary -= sanitary * 0.005 * humans
         research += research * 0.5 * humans * 0.1
 
-    elif c == "уборка":
+    elif c == 3:
         sanitary += sanitary * 0.5
         eat -= eat * 0.001 * humans
         drink -= drink * 0.001 * humans
         research += research * 0.5 * humans * 0.1
 
-    elif c == "изучение":
+    elif c == 4:
+        research += research * humans * 0.1
+        eat -= eat * 0.001 * humans
+        drink -= drink * 0.001 * humans
+        sanitary -= sanitary * 0.005 * humans
+    else:
         research += research * humans * 0.1
         eat -= eat * 0.001 * humans
         drink -= drink * 0.001 * humans
