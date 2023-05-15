@@ -341,6 +341,7 @@ def moon_event(i, population, hunger, thirst, sanitary, research):
                   'связь с котороым была потеряна. '
                   'За время своей автоматической работы он собрал большое количество образцов и данных. '
                   'Также, вы приводите его в рабочее состояние.')
+
             hunger -= hunger * 0.1
             thirst -= thirst * 0.1
             research += research * 0.15
@@ -671,6 +672,13 @@ while moon_flag or mars_flag or venus_flag:
     # Ход Луны
     if (moon_population > 0 or moon_research < 100) and moon_flag:
         print(f'{moon}, Ваш ход!')
+        print(f'Игрок {moon}, на лунной базе на данный момент:')
+        print(round(moon_population), Ru_V.unit_humans)
+        print(round(moon_hunger), Ru_V.unit_eat)
+        print(round(moon_thirst), Ru_V.unit_drink)
+        print(round(moon_sanitary), Ru_V.unit_sanitary)
+        print(round(moon_research), Ru_V.unit_research)
+        print('')
 
         moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research = \
             daily(moon_population, moon_hunger, moon_thirst, moon_sanitary, moon_research)
@@ -691,12 +699,6 @@ while moon_flag or mars_flag or venus_flag:
         moon_hunger, moon_thirst, moon_sanitary, moon_research = \
             resource_check(moon_hunger, moon_thirst, moon_sanitary, moon_research)
 
-        print(f'Игрок {moon}, на лунной базе на данный момент:')
-        print(round(moon_population), Ru_V.unit_humans)
-        print(round(moon_hunger), Ru_V.unit_eat)
-        print(round(moon_thirst), Ru_V.unit_drink)
-        print(round(moon_sanitary), Ru_V.unit_sanitary)
-        print(round(moon_research), Ru_V.unit_research)
         print('')
 
     elif moon_population <= 0:
@@ -712,6 +714,13 @@ while moon_flag or mars_flag or venus_flag:
     # Ход Венеры
     if (venus_population > 0 or venus_research < 100) and venus_flag:
         print(f'{venus}, Ваш ход!')
+        print(f'Игрок {venus}, на базе Венеры на данный момент:')
+        print(round(venus_population), Ru_V.unit_humans)
+        print(round(venus_hunger), Ru_V.unit_eat)
+        print(round(venus_thirst), Ru_V.unit_drink)
+        print(round(venus_sanitary), Ru_V.unit_sanitary)
+        print(round(venus_research), Ru_V.unit_research)
+        print('')
 
         venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research = \
             daily(venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research)
@@ -732,12 +741,6 @@ while moon_flag or mars_flag or venus_flag:
         venus_hunger, venus_thirst, venus_sanitary, venus_research = \
             resource_check(venus_hunger, venus_thirst, venus_sanitary, venus_research)
 
-        print(f'Игрок {venus}, на базе Венеры на данный момент:')
-        print(round(venus_population), Ru_V.unit_humans)
-        print(round(venus_hunger), Ru_V.unit_eat)
-        print(round(venus_thirst), Ru_V.unit_drink)
-        print(round(venus_sanitary), Ru_V.unit_sanitary)
-        print(round(venus_research), Ru_V.unit_research)
         print('')
 
     elif venus_population <= 0:
@@ -753,6 +756,13 @@ while moon_flag or mars_flag or venus_flag:
     # Ход Марса
     if (mars_population > 0 or mars_research < 100) and mars_flag:
         print(f'{mars}, Ваш ход!')
+        print(f'Игрок {mars}, на марсианской базе на данный момент:')
+        print(round(mars_population), Ru_V.unit_humans)
+        print(round(mars_hunger), Ru_V.unit_eat)
+        print(round(mars_thirst), Ru_V.unit_drink)
+        print(round(mars_sanitary), Ru_V.unit_sanitary)
+        print(round(mars_research), Ru_V.unit_research)
+        print('')
 
         mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research = \
             daily(mars_population, mars_hunger, mars_thirst, mars_sanitary, mars_research)
@@ -773,12 +783,6 @@ while moon_flag or mars_flag or venus_flag:
         mars_hunger, mars_thirst, mars_sanitary, mars_research = \
             resource_check(mars_hunger, mars_thirst, mars_sanitary, mars_research)
 
-        print(f'Игрок {mars}, на марсианской базе на данный момент:')
-        print(round(mars_population), Ru_V.unit_humans)
-        print(round(mars_hunger), Ru_V.unit_eat)
-        print(round(mars_thirst), Ru_V.unit_drink)
-        print(round(mars_sanitary), Ru_V.unit_sanitary)
-        print(round(mars_research), Ru_V.unit_research)
         print('')
 
     elif mars_population <= 0:
