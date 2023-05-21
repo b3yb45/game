@@ -1,3 +1,12 @@
+"""
+Андреев Игорь - 35
+Аронова Александра - 
+Мурашова Ирина -
+"""
+
+
+
+
 import Ru_Venera as Ru_V
 from random import choice
 from turtle import *
@@ -338,9 +347,9 @@ def moon_event(i, population, hunger, thirst, sanitary, research):
         var_7 = int(input())
         if var_7 == 1:
             print('Отследив сигнал группа ученых спускается в пещеру. Там они обнаруживают старый луноход, '
-                  'связь с котороым была потеряна. '
-                  'За время своей автоматической работы он собрал большое количество образцов и данных. '
-                  'Также, вы приводите его в рабочее состояние.')
+                  'связь с котороым была потеряна.\n'
+                  'За время своей автоматической работы он собрал большое количество образцов и данных.\n'
+                  'Также, вы приводите его в рабочее состояние.\n')
 
             hunger -= hunger * 0.1
             thirst -= thirst * 0.1
@@ -693,7 +702,18 @@ while moon_flag or mars_flag or venus_flag:
     print('')
 
     # Ход Луны
-    if (moon_population > 0 or moon_research < 100) and moon_flag:
+
+    if moon_population <= 0 and moon_flag:
+        moon_flag = False
+        print(f'{moon}, ', Ru_V.game_over)
+        print('')
+
+    elif moon_research >= 100 and moon_flag:
+        moon_flag = False
+        print(f'{moon}, ', Ru_V.victory)
+        print('')
+
+    elif moon_flag:
         print(f'{moon}, Ваш ход!')
         print(f'Игрок {moon}, на лунной базе на данный момент:')
         print(round(moon_population), Ru_V.unit_humans)
@@ -724,18 +744,19 @@ while moon_flag or mars_flag or venus_flag:
 
         print('')
 
-    elif moon_population <= 0:
-        moon_flag = False
-        print(f'{moon}, ', Ru_V.game_over)
-        print('')
-
-    elif moon_research >= 100:
-        moon_flag = False
-        print(f'{moon}, ', Ru_V.victory)
-        print('')
-
     # Ход Венеры
-    if (venus_population > 0 or venus_research < 100) and venus_flag:
+
+    if venus_population <= 0 and venus_flag:
+        venus_flag = False
+        print(f'{venus}, ', Ru_V.game_over)
+        print('')
+
+    elif venus_research >= 100 and venus_flag:
+        venus_flag = False
+        print(f'{venus}, ', Ru_V.victory)
+        print('')
+
+    elif venus_flag:
         print(f'{venus}, Ваш ход!')
         print(f'Игрок {venus}, на базе Венеры на данный момент:')
         print(round(venus_population), Ru_V.unit_humans)
@@ -755,7 +776,7 @@ while moon_flag or mars_flag or venus_flag:
                 sobitie(venus_c, venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research)
 
         else:
-            venus_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            venus_var = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
             venus_c = choice(venus_var)
             venus_var.remove(venus_c)
             venus_population, venus_hunger, venus_thirst, venus_sanitary, venus_research = \
@@ -766,18 +787,19 @@ while moon_flag or mars_flag or venus_flag:
 
         print('')
 
-    elif venus_population <= 0:
-        venus_flag = False
-        print(f'{venus}, ', Ru_V.game_over)
-        print('')
-
-    elif venus_research >= 100:
-        venus_flag = False
-        print(f'{venus}, ', Ru_V.victory)
-        print('')
-
     # Ход Марса
-    if (mars_population > 0 or mars_research < 100) and mars_flag:
+
+    if mars_population <= 0 and mars_flag:
+        mars_flag = False
+        print(f'{mars}, ', Ru_V.game_over)
+        print('')
+
+    elif mars_research >= 100 and mars_flag:
+        mars_flag = False
+        print(f'{mars}, ', Ru_V.victory)
+        print('')
+
+    elif mars_flag:
         print(f'{mars}, Ваш ход!')
         print(f'Игрок {mars}, на марсианской базе на данный момент:')
         print(round(mars_population), Ru_V.unit_humans)
@@ -806,14 +828,4 @@ while moon_flag or mars_flag or venus_flag:
         mars_hunger, mars_thirst, mars_sanitary, mars_research = \
             resource_check(mars_hunger, mars_thirst, mars_sanitary, mars_research)
 
-        print('')
-
-    elif mars_population <= 0:
-        mars_flag = False
-        print(f'{mars}, ', Ru_V.game_over)
-        print('')
-
-    elif mars_research >= 100:
-        mars_flag = False
-        print(f'{mars}, ', Ru_V.victory)
         print('')
