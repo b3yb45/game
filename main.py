@@ -5,8 +5,6 @@
 """
 
 
-
-
 import Ru_Venera as Ru_V
 from random import choice
 from turtle import *
