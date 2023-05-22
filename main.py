@@ -690,7 +690,7 @@ moon = input('Имена исследователей Луны: ')
 print(moon+','+' добро пожаловать на исследовательскую станцию Луны!')
 
 while moon_flag or mars_flag or venus_flag:
-    if not moon_flag and not mars_flag and not venus_flag:
+    if moon_population <= 0 and mars_population <= 0 and venus_population <= 0:
         print('Все игроки проиграли. Игра окончена.')
         game_over()
         break
